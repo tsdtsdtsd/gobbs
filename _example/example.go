@@ -5,7 +5,7 @@ import "fmt"
 
 func main() {
 
-	p, q, n, err := gobbs.GetBlum(7)
+	p, q, n, err := gobbs.GetBlumA(7)
 	if err != nil {
 		panic(err)
 	}
@@ -16,7 +16,7 @@ func main() {
 
 	fmt.Println("===============================")
 
-	p, q, n, err = gobbs.GetPrimes(7)
+	p, q, n, err = gobbs.GetBlumB(7)
 	if err != nil {
 		panic(err)
 	}
