@@ -22,3 +22,7 @@ BenchmarkGetBlumB-8        10000            139084 ns/op           57232 B/op   
 PASS
 ok      github.com/tsdtsdtsd/gobbs      7.854s
 ```
+
+## Credits
+
+Heavily inspired by https://github.com/foolean/blum-blum-shub
