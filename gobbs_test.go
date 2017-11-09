@@ -1,26 +1,40 @@
 package gobbs_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/tsdtsdtsd/gobbs"
 )
 
-const bits = 7
+const bits = 64
 
-func BenchmarkGetBlumA(b *testing.B) {
+func BenchmarkGetBlumUnits(b *testing.B) {
+	g := gobbs.NewGeneratorWithConfig(&gobbs.Config{
+		Bits: bits,
+	})
+
 	for i := 0; i < b.N; i++ {
-		_, _, _, err := gobbs.GetBlumA(bits)
+		_, _, _, err := g.GetBlumUnits()
 		if err != nil {
-			panic(err)
+			fmt.Println("ERROR:", err)
 		}
 	}
 }
-func BenchmarkGetBlumB(b *testing.B) {
+
+func BenchmarkRandomSeeds(b *testing.B) {
+	g := gobbs.NewGeneratorWithConfig(&gobbs.Config{
+		Bits: bits,
+	})
+	_, _, _, err := g.GetBlumUnits()
+	if err != nil {
+		fmt.Println("ERROR:", err)
+	}
+
 	for i := 0; i < b.N; i++ {
-		_, _, _, err := gobbs.GetBlumB(bits)
+		_, err := g.GetRandomSeed()
 		if err != nil {
-			panic(err)
+			fmt.Println("ERROR:", err)
 		}
 	}
 }
