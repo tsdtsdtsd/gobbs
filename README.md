@@ -1,6 +1,6 @@
 # gobbs
 
-Trying to implement a Blum-Blum-Shub-Generator in Go.
+Trying to implement a [Blum-Blum-Shub-Generator](https://en.wikipedia.org/wiki/Blum_Blum_Shub) in Go.
 
 ## Status
 
