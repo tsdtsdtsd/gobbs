@@ -4,7 +4,7 @@ Trying to implement a Blum-Blum-Shub-Generator in Go.
 
 ## Status
 
-Work in progress
+Testing
 
 ## Tasks done and notes
 
@@ -54,6 +54,9 @@ BenchmarkRandomSeeds-8            300000              4063 ns/op             584
 PASS
 ok      github.com/tsdtsdtsd/gobbs      21.326s
 ```
+
+- Finished generator
+- Added Stream concept
 
 ## Credits
 

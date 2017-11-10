@@ -1,10 +1,18 @@
 package main
 
-import "github.com/tsdtsdtsd/gobbs"
+import (
+	"fmt"
+
+	"github.com/tsdtsdtsd/gobbs"
+)
 
 func main() {
 
-	g := gobbs.NewGenerator()
-	g.Run()
+	g, _ := gobbs.NewGenerator()
+	stream, _ := g.NewStream()
+
+	for value := range stream.Start().C {
+		fmt.Printf("%02x.", value)
+	}
 
 }
