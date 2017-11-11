@@ -4,7 +4,7 @@ go:
   - 1.x
 
 install:
-  - go get github.com/bwmarrin/discordgo
+  - go get github.com/tsdtsdtsd/gobbs
   - go get -v .
   - go get -v github.com/golang/lint/golint 
 

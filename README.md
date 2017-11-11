@@ -1,7 +1,8 @@
 # gobbs
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/tsdtsdtsd/gobbs)](https://goreportcard.com/report/github.com/tsdtsdtsd/gobbs)
+[![Build Status](https://travis-ci.org/bwmarrin/discordgo.svg?branch=master)](https://travis-ci.org/bwmarrin/discordgo)
 [![Godoc](https://godoc.org/github.com/tsdtsdtsd/gobbs?status.svg)](https://godoc.org/github.com/tsdtsdtsd/gobbs)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tsdtsdtsd/gobbs)](https://goreportcard.com/report/github.com/tsdtsdtsd/gobbs)
 
 Trying to implement a [Blum-Blum-Shub-Generator](https://en.wikipedia.org/wiki/Blum_Blum_Shub) in Go.
 
