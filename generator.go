@@ -15,8 +15,7 @@ type Generator struct {
 	x0   *big.Int
 	x1   *big.Int
 
-	bits     int
-	readInit bool
+	bits int
 }
 
 // New returns a Generator with default config
@@ -65,6 +64,9 @@ func NewWithConfig(config *Config) (*Generator, error) {
 			return g, err
 		}
 	}
+
+	// x0 = (seed ^ 2) mod n
+	g.x0.Exp(g.seed, bigTwo, g.n)
 
 	return g, nil
 }
@@ -147,30 +149,17 @@ func (g *Generator) readByte() byte {
 		val        uint
 	)
 
-	if !g.readInit {
-		// x0 = (seed ^ 2) mod n
-		g.x0.Exp(g.seed, bigTwo, g.n)
-		g.readInit = true
-	}
+	for bitCounter = 0; bitCounter < 8; bitCounter++ {
 
-	for {
 		// x1 = (x0 ^ 2) mod n
 		g.x1.Exp(g.x0, bigTwo, g.n)
 
-		if bitCounter == 0 {
-			val = 0
-		}
-
 		if g.x1.Bit(0) == 1 {
-			val |= (1 << bitCounter)
+			val |= 1 << bitCounter
 		}
 
-		bitCounter++
 		g.x0.Set(g.x1)
-
-		if bitCounter == 8 {
-			return byte(val)
-		}
 	}
 
+	return byte(val)
 }
