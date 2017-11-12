@@ -9,10 +9,12 @@ import (
 func main() {
 
 	g, _ := gobbs.NewGenerator()
-	stream, _ := g.NewStream()
 
-	for value := range stream.Start().C {
-		fmt.Printf("%02x.", value)
+	buf := make([]byte, 1)
+
+	for {
+		g.Read(buf)
+		fmt.Printf("%02x.", buf)
 	}
 
 }

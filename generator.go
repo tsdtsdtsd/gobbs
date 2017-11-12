@@ -12,8 +12,11 @@ type Generator struct {
 	q    *big.Int
 	n    *big.Int
 	seed *big.Int
+	x0   *big.Int
+	x1   *big.Int
 
-	bits int
+	bits     int
+	readInit bool
 }
 
 // NewGenerator returns a Generator with default config
@@ -29,8 +32,12 @@ func NewGeneratorWithConfig(config *Config) (*Generator, error) {
 		q:    big.NewInt(0),
 		n:    big.NewInt(0),
 		seed: big.NewInt(0),
+		x0:   big.NewInt(0),
+		x1:   big.NewInt(0),
 		bits: config.Bits,
 	}
+
+	// Handle config
 
 	if config.PrimeP != nil && config.PrimeQ != nil {
 		// @todo validate primes first
@@ -43,27 +50,33 @@ func NewGeneratorWithConfig(config *Config) (*Generator, error) {
 		g.seed.Set(config.Seed)
 	}
 
-	return g, nil
-}
-
-// NewStream returns a ready to use Stream
-func (g *Generator) NewStream() (*Stream, error) {
+	// Check values
 
 	if g.n.Cmp(bigZero) == 0 {
 		_, _, _, err := g.CalcBlumUnits()
 		if err != nil {
-			return nil, err
+			return g, err
 		}
 	}
 
 	if g.seed.Cmp(bigZero) == 0 {
 		_, err := g.CalcRandomSeed()
 		if err != nil {
-			return nil, err
+			return g, err
 		}
 	}
 
-	return &Stream{g: g}, nil
+	return g, nil
+}
+
+func (g *Generator) Read(p []byte) (n int, err error) {
+	if l := len(p); l > 0 {
+		for n < l {
+			p[n] = g.readByte()
+			n++
+		}
+	}
+	return
 }
 
 // CalcBlumUnits calculates, sets to *g and returns two Blum primes (p) and (q), as well as their product, the Blum integer (n).
@@ -127,39 +140,37 @@ func (g *Generator) CalcRandomSeed() (*big.Int, error) {
 	return g.seed, err
 }
 
-func (g *Generator) bytesLoop(C chan uint) {
+func (g *Generator) readByte() byte {
 
 	var (
 		bitCounter uint
 		val        uint
-
-		x0 = big.NewInt(0)
-		x1 = big.NewInt(0)
 	)
 
-	// x0 = (seed ^ 2) mod n
-	x0.Exp(g.seed, bigTwo, g.n)
+	if !g.readInit {
+		// x0 = (seed ^ 2) mod n
+		g.x0.Exp(g.seed, bigTwo, g.n)
+		g.readInit = true
+	}
 
 	for {
 		// x1 = (x0 ^ 2) mod n
-		x1.Exp(x0, bigTwo, g.n)
+		g.x1.Exp(g.x0, bigTwo, g.n)
 
 		if bitCounter == 0 {
 			val = 0
 		}
 
-		if x1.Bit(0) == 1 {
+		if g.x1.Bit(0) == 1 {
 			val |= (1 << bitCounter)
 		}
 
 		bitCounter++
+		g.x0.Set(g.x1)
 
 		if bitCounter == 8 {
-			C <- val
-			bitCounter = 0
+			return byte(val)
 		}
-
-		x0.Set(x1)
 	}
 
 }
