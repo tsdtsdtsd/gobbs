@@ -42,6 +42,26 @@ for {
 }
 ```
 
+## Benchmarks
+
+```
+bits = 1024
+readLength = 512
+
+> go test -bench=. -benchmem -count 3
+goos: windows
+goarch: amd64
+pkg: github.com/tsdtsdtsd/gobbs
+BenchmarkInit-8               10         298040350 ns/op         2540071 B/op       8105 allocs/op
+BenchmarkInit-8                3         399833433 ns/op         3571288 B/op      11109 allocs/op
+BenchmarkInit-8                5         297086520 ns/op         2594611 B/op       8185 allocs/op
+BenchmarkRead-8               50          37528676 ns/op         9440499 B/op      16393 allocs/op
+BenchmarkRead-8               50          37291990 ns/op         9440641 B/op      16394 allocs/op
+BenchmarkRead-8               50          38036620 ns/op         9440500 B/op      16393 allocs/op
+PASS
+ok      github.com/tsdtsdtsd/gobbs      13.857s
+```
+
 ## Credits
 
 Heavily inspired by (basically a port of) https://github.com/foolean/blum-blum-shub

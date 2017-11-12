@@ -9,11 +9,22 @@ import (
 const bits = 1024
 const readLength = 512
 
+var g *gobbs.Generator
+
+func BenchmarkInit(b *testing.B) {
+
+	for i := 0; i < b.N; i++ {
+		g, _ = gobbs.NewGeneratorWithConfig(&gobbs.Config{
+			Bits: bits,
+		})
+	}
+}
+
 func BenchmarkRead(b *testing.B) {
 
-	g, _ := gobbs.NewGeneratorWithConfig(&gobbs.Config{
-		Bits: bits,
-	})
+	// g, _ := gobbs.NewGeneratorWithConfig(&gobbs.Config{
+	// 	Bits: bits,
+	// })
 	buf := make([]byte, bits)
 
 	for i := 0; i < b.N; i++ {
