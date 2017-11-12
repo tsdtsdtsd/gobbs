@@ -6,13 +6,17 @@ import (
 	"github.com/tsdtsdtsd/gobbs"
 )
 
-const bits = 64
+const bits = 1024
+const readLength = 512
 
-func BenchmarkLoadStream(b *testing.B) {
+func BenchmarkRead(b *testing.B) {
+
+	g, _ := gobbs.NewGeneratorWithConfig(&gobbs.Config{
+		Bits: bits,
+	})
+	buf := make([]byte, bits)
+
 	for i := 0; i < b.N; i++ {
-		g, _ := gobbs.NewGeneratorWithConfig(&gobbs.Config{
-			Bits: bits,
-		})
-		_, _ = g.NewStream()
+		g.Read(buf)
 	}
 }
