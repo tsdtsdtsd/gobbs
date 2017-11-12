@@ -25,7 +25,7 @@ func BenchmarkRead(b *testing.B) {
 	// g, _ := gobbs.NewWithConfig(&gobbs.Config{
 	// 	Bits: bits,
 	// })
-	buf := make([]byte, bits)
+	buf := make([]byte, readLength)
 
 	for i := 0; i < b.N; i++ {
 		g.Read(buf)
