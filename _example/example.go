@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	g, _ := gobbs.NewGenerator()
+	g, _ := gobbs.New()
 
 	buf := make([]byte, 1)
 

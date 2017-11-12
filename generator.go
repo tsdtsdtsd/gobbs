@@ -19,13 +19,13 @@ type Generator struct {
 	readInit bool
 }
 
-// NewGenerator returns a Generator with default config
-func NewGenerator() (*Generator, error) {
-	return NewGeneratorWithConfig(DefaultConfig)
+// New returns a Generator with default config
+func New() (*Generator, error) {
+	return NewWithConfig(DefaultConfig)
 }
 
-// NewGeneratorWithConfig returns a Generator with given config
-func NewGeneratorWithConfig(config *Config) (*Generator, error) {
+// NewWithConfig returns a Generator with given config
+func NewWithConfig(config *Config) (*Generator, error) {
 
 	g := &Generator{
 		p:    big.NewInt(0),

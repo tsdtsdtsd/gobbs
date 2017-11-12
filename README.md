@@ -17,13 +17,13 @@ Create a new generator with default config:
 ```
 import "github.com/tsdtsdtsd/gobbs"
 
-g, err := gobbs.NewGenerator()
+g, err := gobbs.New()
 ```
 
-`NewGenerator()` will generate two random blum primes, a blum integer and a random seed. If you want to use your own numbers from an other source, you can use `NewGeneratorWithConfig()`:
+`New()` will generate two random blum primes, a blum integer and a random seed. If you want to use your own numbers from an other source, you can use `NewWithConfig()`:
 
 ```
-g, err := gobbs.NewGeneratorWithConfig(&gobbs.Config{
+g, err := gobbs.NewWithConfig(&gobbs.Config{
     PrimeP: myPrimeOne,
     PrimeQ: myPrimeTwo,
     Seed: mySeed,

@@ -14,7 +14,7 @@ var g *gobbs.Generator
 func BenchmarkInit(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
-		g, _ = gobbs.NewGeneratorWithConfig(&gobbs.Config{
+		g, _ = gobbs.NewWithConfig(&gobbs.Config{
 			Bits: bits,
 		})
 	}
@@ -22,7 +22,7 @@ func BenchmarkInit(b *testing.B) {
 
 func BenchmarkRead(b *testing.B) {
 
-	// g, _ := gobbs.NewGeneratorWithConfig(&gobbs.Config{
+	// g, _ := gobbs.NewWithConfig(&gobbs.Config{
 	// 	Bits: bits,
 	// })
 	buf := make([]byte, bits)
