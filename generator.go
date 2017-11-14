@@ -89,10 +89,15 @@ func (g *Generator) CalcBlumUnits() (*big.Int, *big.Int, *big.Int, error) {
 		tmp = big.NewInt(0)
 	)
 
+	g.p = big.NewInt(0)
 	g.q = big.NewInt(0)
-	g.p, err = rand.Prime(rand.Reader, g.bits)
-	if err != nil {
-		return g.p, g.q, g.n, err
+	g.n = big.NewInt(0)
+
+	for tmp.Mod(g.p, bigFour).Cmp(bigThree) != 0 {
+		g.p, err = rand.Prime(rand.Reader, g.bits)
+		if err != nil {
+			return g.p, g.q, g.n, err
+		}
 	}
 
 	for tmp.Mod(g.n, bigFour).Cmp(bigOne) != 0 || g.p.Cmp(g.q) == 0 {
