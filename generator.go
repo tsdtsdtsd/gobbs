@@ -15,17 +15,16 @@ type Generator struct {
 	x0   *big.Int
 	x1   *big.Int
 
-	bits     int
-	readInit bool
+	bits int
 }
 
-// NewGenerator returns a Generator with default config
-func NewGenerator() (*Generator, error) {
-	return NewGeneratorWithConfig(DefaultConfig)
+// New returns a Generator with default config
+func New() (*Generator, error) {
+	return NewWithConfig(DefaultConfig)
 }
 
-// NewGeneratorWithConfig returns a Generator with given config
-func NewGeneratorWithConfig(config *Config) (*Generator, error) {
+// NewWithConfig returns a Generator with given config
+func NewWithConfig(config *Config) (*Generator, error) {
 
 	g := &Generator{
 		p:    big.NewInt(0),
@@ -66,6 +65,9 @@ func NewGeneratorWithConfig(config *Config) (*Generator, error) {
 		}
 	}
 
+	// x0 = (seed ^ 2) mod n
+	g.x0.Exp(g.seed, bigTwo, g.n)
+
 	return g, nil
 }
 
@@ -87,10 +89,15 @@ func (g *Generator) CalcBlumUnits() (*big.Int, *big.Int, *big.Int, error) {
 		tmp = big.NewInt(0)
 	)
 
+	g.p = big.NewInt(0)
 	g.q = big.NewInt(0)
-	g.p, err = rand.Prime(rand.Reader, g.bits)
-	if err != nil {
-		return g.p, g.q, g.n, err
+	g.n = big.NewInt(0)
+
+	for tmp.Mod(g.p, bigFour).Cmp(bigThree) != 0 {
+		g.p, err = rand.Prime(rand.Reader, g.bits)
+		if err != nil {
+			return g.p, g.q, g.n, err
+		}
 	}
 
 	for tmp.Mod(g.n, bigFour).Cmp(bigOne) != 0 || g.p.Cmp(g.q) == 0 {
@@ -147,30 +154,17 @@ func (g *Generator) readByte() byte {
 		val        uint
 	)
 
-	if !g.readInit {
-		// x0 = (seed ^ 2) mod n
-		g.x0.Exp(g.seed, bigTwo, g.n)
-		g.readInit = true
-	}
+	for bitCounter = 0; bitCounter < 8; bitCounter++ {
 
-	for {
 		// x1 = (x0 ^ 2) mod n
 		g.x1.Exp(g.x0, bigTwo, g.n)
 
-		if bitCounter == 0 {
-			val = 0
-		}
-
 		if g.x1.Bit(0) == 1 {
-			val |= (1 << bitCounter)
+			val |= 1 << bitCounter
 		}
 
-		bitCounter++
 		g.x0.Set(g.x1)
-
-		if bitCounter == 8 {
-			return byte(val)
-		}
 	}
 
+	return byte(val)
 }

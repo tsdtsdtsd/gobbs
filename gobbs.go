@@ -7,8 +7,9 @@ import (
 )
 
 var (
-	bigZero = big.NewInt(0) // These should be consts, but consts can't be structs :(
-	bigOne  = big.NewInt(1)
-	bigTwo  = big.NewInt(2)
-	bigFour = big.NewInt(4)
+	bigZero  = big.NewInt(0) // These should be consts, but consts can't be structs :(
+	bigOne   = big.NewInt(1)
+	bigTwo   = big.NewInt(2)
+	bigThree = big.NewInt(3)
+	bigFour  = big.NewInt(4)
 )

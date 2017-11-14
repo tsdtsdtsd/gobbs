@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	g, _ := gobbs.NewGenerator()
+	g, _ := gobbs.New()
 
 	buf := make([]byte, 1)
 
@@ -16,5 +16,13 @@ func main() {
 		g.Read(buf)
 		fmt.Printf("%02x.", buf)
 	}
+
+	// for {
+	// 	g.Read(buf)
+	// 	if int(buf[0]) >= 0 && int(buf[0]) <= 3 {
+	// 		fmt.Printf("%d\n", int(buf[0]))
+	// 		break
+	// 	}
+	// }
 
 }
