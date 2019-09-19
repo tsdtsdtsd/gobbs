@@ -1,6 +1,6 @@
 # gobbs
 
-[![Build Status](https://travis-ci.org/bwmarrin/discordgo.svg?branch=master)](https://travis-ci.org/bwmarrin/discordgo)
+[![Build Status](https://travis-ci.org/tsdtsdtsd/gobbs.svg?branch=master)](https://travis-ci.org/tsdtsdtsd/gobbs)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tsdtsdtsd/gobbs)](https://goreportcard.com/report/github.com/tsdtsdtsd/gobbs)
 [![Godoc](https://godoc.org/github.com/tsdtsdtsd/gobbs?status.svg)](https://godoc.org/github.com/tsdtsdtsd/gobbs)
 
