@@ -1,3 +1,3 @@
 module github.com/tsdtsdtsd/gobbs
 
-go 1.11
+go 1.9
